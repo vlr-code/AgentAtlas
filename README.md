@@ -13,13 +13,21 @@ No network, no telemetry — everything stays on your Mac.
 ## Download
 
 <p align="center">
-  <a href="https://github.com/vlr-code/AgentAtlas/releases/latest">
+  <a href="https://github.com/vlr-code/AgentAtlas/releases/latest/download/AgentAtlas.zip">
     <img src="https://img.shields.io/github/v/release/vlr-code/AgentAtlas?label=Download%20AgentAtlas&style=for-the-badge&logo=apple&color=E8B44C" alt="Download latest AgentAtlas">
   </a>
 </p>
 
-> A signed, notarised build is on its way. For now the button opens the latest
-> release — or build from source in two minutes (see **Build &amp; run** below).
+### Installing
+
+1. Unzip the download.
+2. Drag **AgentAtlas.app** into `/Applications`.
+3. Double-click to launch.
+
+The build is signed with a Developer ID certificate and notarised by Apple, so it
+opens without any Gatekeeper warnings on macOS 26.5+.
+
+[All releases &rarr;](https://github.com/vlr-code/AgentAtlas/releases)
 
 ## What it does
 
