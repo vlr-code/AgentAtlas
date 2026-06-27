@@ -59,6 +59,10 @@ open AgentAtlas.xcodeproj
 
 Then run with ⌘R.
 
+## License
+
+MIT — see [LICENSE](LICENSE).
+
 ---
 
 AgentAtlas 1.0
