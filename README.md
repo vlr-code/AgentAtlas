@@ -4,8 +4,6 @@
 
 # AgentAtlas
 
-**Stop hunting for configs.**
-
 AgentAtlas is a native macOS app that finds every AI-coding-agent config scattered
 across your Mac — rules, MCP servers, skills, commands, subagents and settings —
 and shows what's enabled, where it lives, and what conflicts. One scan, one map.
