@@ -10,6 +10,17 @@ and shows what's enabled, where it lives, and what conflicts. One scan, one map.
 
 No network, no telemetry — everything stays on your Mac.
 
+## Download
+
+<p align="center">
+  <a href="https://github.com/vlr-code/AgentAtlas/releases/latest">
+    <img src="https://img.shields.io/github/v/release/vlr-code/AgentAtlas?label=Download%20AgentAtlas&style=for-the-badge&logo=apple&color=E8B44C" alt="Download latest AgentAtlas">
+  </a>
+</p>
+
+> A signed, notarised build is on its way. For now the button opens the latest
+> release — or build from source in two minutes (see **Build &amp; run** below).
+
 ## What it does
 
 - **Scans your whole setup** — global locations (`~/.claude`, `~/.cursor`,
