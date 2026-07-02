@@ -46,10 +46,11 @@ Claude Code · Cursor · Windsurf · Cline · Codex · Gemini · Continue · Qwe
 
 ## Requirements
 
-- macOS 26.5+
-- Xcode — no third-party dependencies, pure AppKit
+- macOS 26.5+ — universal binary, Apple Silicon & Intel
 
 ## Build & run
+
+Pure AppKit, no third-party dependencies — all you need is Xcode.
 
 ```bash
 git clone https://github.com/vlr-code/AgentAtlas.git
@@ -62,7 +63,3 @@ Then run with ⌘R.
 ## License
 
 MIT — see [LICENSE](LICENSE).
-
----
-
-AgentAtlas 1.0
