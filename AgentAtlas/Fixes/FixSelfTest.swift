@@ -65,6 +65,21 @@ nonisolated enum FixSelfTest {
             check((try? String(contentsOf: dup, encoding: .utf8)) == "hello", "duplicate: reverted")
         } else { check(false, "duplicate applied") }
 
+        // 4. failed revert — a missing backup or an empty record must fail
+        //    WITHOUT touching the current file
+        let safe = tmp.appendingPathComponent("safe.json")
+        try? #"{"mcpServers":{"pg":{"command":"x"}}}"#.write(to: safe, atomically: true, encoding: .utf8)
+        let gone = FixRecord(id: "gone", date: Date(), kind: .enableDisabled, artifactName: "pg",
+                             realPath: safe.path, backupPath: backups.appendingPathComponent("missing").path,
+                             symlinkTarget: nil, reverted: false, summary: "")
+        check(!Fixer.revert(gone), "missing backup: revert fails")
+        check(fm.fileExists(atPath: safe.path), "missing backup: current file survives")
+        let empty = FixRecord(id: "empty", date: Date(), kind: .enableDisabled, artifactName: "pg",
+                              realPath: safe.path, backupPath: nil,
+                              symlinkTarget: nil, reverted: false, summary: "")
+        check(!Fixer.revert(empty), "empty record: revert fails")
+        check(fm.fileExists(atPath: safe.path), "empty record: current file survives")
+
         try? fm.removeItem(at: tmp)
         FileHandle.standardOutput.write(Data((ok ? "ALL PASS\n" : "SOME FAILED\n").utf8))
         exit(ok ? 0 : 1)

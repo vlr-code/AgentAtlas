@@ -47,18 +47,28 @@ nonisolated enum Fixer {
                          reverted: false, summary: "\(kind.actionLabel) · \(a.name)")
     }
 
-    /// Restore the original state recorded by a fix.
+    /// Restore the original state recorded by a fix. The restored state is fully
+    /// staged next to the live file first — a failed revert (missing backup, bad
+    /// record, disk error) must never destroy what's currently at the path.
     static func revert(_ r: FixRecord) -> Bool {
         let fm = FileManager.default
         let realURL = URL(fileURLWithPath: r.realPath)
-        try? fm.removeItem(at: realURL)   // clear current state (edited file / nothing)
+        let staging = realURL.deletingLastPathComponent()
+            .appendingPathComponent(".\(realURL.lastPathComponent).aa-restore-\(r.id)")
 
+        try? fm.removeItem(at: staging)
         if let target = r.symlinkTarget {
-            return (try? fm.createSymbolicLink(atPath: r.realPath, withDestinationPath: target)) != nil
+            guard (try? fm.createSymbolicLink(atPath: staging.path, withDestinationPath: target)) != nil else { return false }
+        } else if let bp = r.backupPath {
+            guard (try? fm.copyItem(at: URL(fileURLWithPath: bp), to: staging)) != nil else { return false }
+        } else {
+            return false
         }
-        if let bp = r.backupPath {
-            return (try? fm.copyItem(at: URL(fileURLWithPath: bp), to: realURL)) != nil
-        }
+
+        // Same-directory rename — the swap into place is atomic.
+        try? fm.removeItem(at: realURL)
+        if (try? fm.moveItem(at: staging, to: realURL)) != nil { return true }
+        try? fm.removeItem(at: staging)
         return false
     }
 
